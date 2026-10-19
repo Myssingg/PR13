@@ -1,0 +1,51 @@
+﻿using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.ComponentModel;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace PR13_BorDer.Models
+{
+    class TodoModel : INotifyPropertyChanged
+    {
+        [JsonProperty(propertyName: "creationDate")]
+        public DateTime CreationDate { get; set; } = DateTime.Now;
+
+        private bool _isDone;
+        private string _text;
+        public bool IsDone
+        {
+            get { return _isDone; }
+            set
+            {
+                if (_isDone == value)
+                    return;
+                _isDone = value;
+                OnPropertyChanged(nameof(IsDone));
+            }
+        }
+
+        [JsonProperty(propertyName: "tutText")]
+        public string Text
+        {
+            get { return _text; }
+            set
+            {
+                if (_text == value)
+                    return;
+                _text = value; 
+                OnPropertyChanged(nameof(Text));
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged(string propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+    }
+}
